@@ -146,20 +146,3 @@ describe "pintura a granel" {
 		assert.equals(valido, false)
 	}
 }
-
-/*Respecto a la pintura a granel
-Caso de prueba
-Valor esperado
-Cuál es el costo de pintura de una superficie de 10 m2
-35
-Cuál es el costo de pintura de una superficie de 250 m2
-875
-Hacer que Raúl trabaje con pintura a granel.
-Saber si Aldo puede contratar a Raúl.
-Sí. El presupuesto de Aldo es 1200.
-El costo de 41 m2 de la pintura a granel es 143,50 y el costo de mano de obra del trabajo para Raúl es de 1025. 
-Y 1168,50 (143,50 + 1025) <= 1200
-Hacer que Venancio trabaje con pintura a granel. Saber si Aldo puede contratar a Venancio.
-No..El costo de mano de obra de Venancio es 1100 + el costo de pintura que es 143,50 se va a 1243,50 > 1200 que es el presupuesto de Aldo
-
- */
