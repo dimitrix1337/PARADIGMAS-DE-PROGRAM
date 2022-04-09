@@ -1,18 +1,21 @@
 object aldo {
 	
-	var ahorros = 5000
+	var ahorros = 6000
 	
-	method buscar_presupuesto(pintor, ancho, largo, alto) {
+	method buscar_presupuesto(pintor,metros, _pintura) {
 		
-		var superficie = (ancho + largo) * 2 * alto
-		var precio = pintor.presupuesto(superficie)
+		var precio = pintor.presupuesto(metros, _pintura)
 		
-		if (precio <= self.presupuesto_maximo()) {
-			return 'Se puede pagar.'
-		} else {
-			return 'No se puede pagar.'
-		}
+		return precio
 		
+	}
+	
+	method alcanza(precio) {
+		 return precio <= self.presupuesto_maximo()
+	}
+	
+	method ahorrar(monto) {
+		ahorros += monto
 	}
 	
 	method presupuesto_maximo() {
@@ -22,13 +25,13 @@ object aldo {
 }
 
 object raul {
-	method presupuesto(metros) {
-		return 25*metros + pintura.costo(metros)
+	method presupuesto(metros, _pintura) {
+		return 25*metros + _pintura.costo(metros)
 	}
 }
 
 object carlos {
-	method presupuesto(metros) {
+	method presupuesto(metros, _pintura) {
 		if (metros < 20) {
 			return 500
 		} else {
@@ -38,8 +41,8 @@ object carlos {
 }
 
 object venencio {
-	method presupuesto(metros) {
-		return 220*(metros/10).roundUp(0) + pintura.costo(metros)
+	method presupuesto(metros, _pintura) {
+		return 220*(metros/10).roundUp(0) + _pintura.costo(metros)
 	}
 }
 
@@ -47,8 +50,12 @@ object pintura {
 	
 	var precio = 200
 	
+	method latas(metros) {
+		return (metros/50).roundUp(0)
+	}
+	
 	method costo(metros) {
-		return (metros / 50).roundUp(0) * precio
+		return self.latas(metros) * precio
 	}
 	
 	method set_precio(_precio) {
@@ -56,7 +63,25 @@ object pintura {
 	}
 }
 
+object pintura_granel {
 
+	
+	method costo(metros) {
+		return metros * 3.5
+	}
+}
+
+
+/*Algunas pinturerías trabajan con el sistema de pintura “a granel”, 
+ * que permite fraccionar la cantidad de litros que son necesarias para una superficie. 
+ * El costo por litro es de 3,50, y cada litro cubre un metro cuadrado.
+ */
+
+object superficie {
+	method calcular(alto, largo, ancho) {
+		return (largo + ancho) * 2 * alto
+	}
+}
 /*  Aldo necesita pintar su casa, para lo cual salió urgente a buscar presupuestos. Un amigo le recomendó a Raúl, 
  * quien trabaja desde hace años en el rubro, es prolijo y deja la casa en orden al terminar su actividad;
  *  cobra $25 por metro cuadrado, más el costo de la pintura (ver en próximos párrafos). 
