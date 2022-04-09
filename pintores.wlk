@@ -32,11 +32,7 @@ object raul {
 
 object carlos {
 	method presupuesto(metros, _pintura) {
-		if (metros < 20) {
-			return 500
-		} else {
-			return 500 + (metros-20)*30
-		}
+		return (500 + (metros-20)*30).max(500)
 	}
 }
 
