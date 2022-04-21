@@ -1,0 +1,42 @@
+import mensajeros_parte_dos.*
+import mensajeros.*
+
+describe "Empresa mensajeria tests" {
+	
+	test "Contratar empleados" {
+		empresa.ver_empleados()
+		assert.equals(empresa.cantidad_empleados(), 0)
+		
+		empresa.contratar(neo)
+		assert.equals(empresa.cantidad_empleados(), 1)
+	
+	}
+	test "Empresa grande" {
+		empresa.despedir_todos()
+		var resultado = empresa.grande()
+		assert.equals(resultado, false)
+		
+		empresa.contratar(roberto)
+		empresa.contratar(neo)
+		empresa.contratar(chuck_norris)
+		
+		resultado = empresa.grande()
+		assert.equals(resultado, true)
+	}
+	test "Ver primero y ultimo" {
+		empresa.despedir_todos()
+		
+		empresa.contratar(roberto)
+		empresa.contratar(neo)
+		empresa.contratar(chuck_norris)
+		
+		assert.equals(empresa.primero(), roberto)
+		assert.equals(empresa.ultimo(), chuck_norris)
+	}
+	test "Pasar primero y ultimo" {
+		empresa.despedir(roberto)
+		assert.equals(empresa.primero(), neo)
+		empresa.despedir(chuck_norris)
+		assert.equals(empresa.ultimo(), neo)
+	}
+}

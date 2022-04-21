@@ -1,0 +1,26 @@
+import mensajeros.*
+/*
+Realizar una serie de tests, donde se prueben las diferentes situaciones, entre ellas:
+Que roberto (90kg) puede llevar un paquete que está pago en un camión que tiene un acoplado.
+Que neo con crédito no puede llevar un paquete que no está pago a la matrix.
+ */
+describe "serie 1 tests" {
+	
+	test "roberto llevar paquete" {
+
+		const paquete1 = paquete // creando paquete
+		paquete1.pagar() // pagando paquete ya que por definicion no viene pago
+		var resultado = roberto.llevar(paquete1, 1, puente_brooklyn) // preguntandole a roberto
+		// si puede llevar el paquete creado, con 1 acople y por el puente brooklyn
+
+		assert.equals(resultado, true)
+	}
+	
+	test "neo con credito no puede llevar un paquete que no esta pago en la matrix" {
+		
+		const paquete1 = paquete
+		neo.cargar_credito(50)
+		var resultado = neo.llevar(paquete1, matrix)
+		assert.equals(resultado, false)
+	}
+}
