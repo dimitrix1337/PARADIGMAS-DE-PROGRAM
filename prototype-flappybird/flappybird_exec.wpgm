@@ -1,0 +1,10 @@
+import wollok.game.*
+import flappybird_code.* 
+
+program flappybird {  
+
+	flappy.config() 
+	flappy.setup()
+	game.start()
+
+}
