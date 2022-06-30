@@ -11,6 +11,9 @@ class Partido {
 	var property finalizado
 	var property ganador
 	var property perdedor
+	var property jugadas_primer_tiempo = []
+	var property jugadas_segundo_tiempo = []
+	var property minuto
 	
 	method meter_gol(jugada) {
 		if (var_configuracion.analizar(jugada) == not false) {
@@ -18,6 +21,11 @@ class Partido {
 				self.goles_visitante(self.goles_visitante() + 1)
 			} else {
 				self.goles_local(self.goles_local() + 1)
+			}
+			if (minuto > 45) {
+				jugadas_segundo_tiempo.add(jugada)
+			} else {
+				jugadas_primer_tiempo.add(jugada)
 			}
 			return "Gol!"
 		} else {
@@ -56,6 +64,10 @@ class Partido {
 		} else {
 			return 1
 		}
+	}
+	
+	method mas_jugadas_segundo_tiempo() {
+		return jugadas_segundo_tiempo.size() > jugadas_primer_tiempo.size()
 	}
 }
 
