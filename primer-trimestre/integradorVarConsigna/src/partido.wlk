@@ -69,6 +69,12 @@ class Partido {
 	method mas_jugadas_segundo_tiempo() {
 		return jugadas_segundo_tiempo.size() > jugadas_primer_tiempo.size()
 	}
+	
+	method finalizar_partido() {
+		if (minuto > 90) {
+			finalizado = true
+		}
+	}
 }
 
 class Equipo {
