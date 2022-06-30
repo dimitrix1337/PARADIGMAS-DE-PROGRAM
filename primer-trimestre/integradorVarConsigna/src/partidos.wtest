@@ -19,6 +19,7 @@ describe "Partido Paraguay y Brasil" {
 			 perdedor = null, goles_local = 0, 
 			 goles_visitante = 0, local = Brasil,
 			  visitante = Paraguay, var_configuracion = VAR_PARTIDO
+			  , minuto = 0
 		)
 		
 		const jugada_brasil_1 = new Jugadas(equipo_goleador = Brasil,minuto_partido= 20,ultimo_jugador_pelota=Ronaldinho)
