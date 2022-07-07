@@ -24,6 +24,8 @@ class Falta_normal inherits Tarjeta {
 class Pelea_cancha inherits Tarjeta {
 	var property tipo = 2
 	const property problematicos = []
+	const property equipo_local
+	const property equipo_visitante
 }
 
 class Insulto inherits Tarjeta {
