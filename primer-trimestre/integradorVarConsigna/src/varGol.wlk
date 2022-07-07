@@ -5,7 +5,7 @@ object _var {
 	var property configuracion = mas_goles
 	
 	method analizar(jugada) {
-		return (jugada.circunstancias().size() == 0) or (configuracion.veredicto(jugada))
+		return (jugada.circunstancias().isEmpty()) or (configuracion.veredicto(jugada))
 	}
 	
 }
