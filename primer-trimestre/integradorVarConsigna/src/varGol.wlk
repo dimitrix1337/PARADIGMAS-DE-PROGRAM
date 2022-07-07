@@ -23,8 +23,7 @@ object justicia_ciega inherits Configuraciones {
 	const requisitos = [la_pelota_no_paso_completamente_la_linea, jugador_adelantado, fue_a_mano]
 	
 	override method veredicto(jugada) {
-		var simil = jugada.circunstancias.filter{jugada_ind => requisitos.contains(jugada_ind) == not false}
-		return simil.size()>0
+		return jugada.circunstancias().any({circunstancia => requisitos.contains(circunstancia)})
 	}
 }
 
