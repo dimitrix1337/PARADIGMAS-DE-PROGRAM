@@ -2,7 +2,7 @@ class Jugadas {
 	var property equipo_goleador
 	var property ultimo_jugador_pelota
 	var property minuto_partido
-	var property circunstancias = [ninguna]
+	var property circunstancias = []
 }
 
 object ninguna {}
