@@ -10,32 +10,28 @@ object _var {
 	
 }
 
-
-class Configuraciones {
-	method veredicto (jugada) {
-		return true
-	}
-}
-
-
-object justicia_ciega inherits Configuraciones {
+object justicia_ciega {
 	
 	const requisitos = [la_pelota_no_paso_completamente_la_linea, jugador_adelantado, fue_a_mano]
 	
-	override method veredicto(jugada) {
+	method veredicto(jugada) {
 		return jugada.circunstancias().any({circunstancia => requisitos.contains(circunstancia)})
 	}
 }
 
-object fifa inherits Configuraciones {
+object fifa {
 	
-	override method veredicto(jugada) {
+	method veredicto(jugada) {
 		return (jugada.equipo_goleador().mundial() == not false)
 	}
 	
 }
 
-object mas_goles inherits Configuraciones {}
+object mas_goles {
+	method veredicto(jugada) {
+		return true
+	}
+}
 
 object sacador_faltas {
 	method veredicto(falta) {
