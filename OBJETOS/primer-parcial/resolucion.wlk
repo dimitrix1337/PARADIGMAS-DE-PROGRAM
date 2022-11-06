@@ -1,4 +1,4 @@
-	
+class Bioma {
 	method cantidad_biomasa() {
 		return habitats.sum({habitat => habitat.total_biomasa()})
 	}
