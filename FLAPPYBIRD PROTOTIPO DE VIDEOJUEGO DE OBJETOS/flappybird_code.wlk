@@ -106,8 +106,10 @@ object bitcoin {
 object bird {
 	var property alive = true
 	var x = 0
+	var y = 0
 	var total_pos = game.at(6, 20)
 	var image = "bird0.png"
+	
 	method position() = total_pos
 	method image() = image
 	
@@ -118,10 +120,8 @@ object bird {
 	}
 	
 	method moving() {
-		if (x == 3) {
-			x = 0
-		}
-		image = "bird"+x+".png"
+		y = x % 3
+		image = "bird"+y+".png"
 		x+=1
 	}
 	
