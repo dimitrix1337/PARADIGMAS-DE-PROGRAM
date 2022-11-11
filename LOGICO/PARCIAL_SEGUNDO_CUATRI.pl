@@ -1,53 +1,100 @@
-nombre(messi).
-nombre(haland).
-habilidad(messi, 100).
-habilidad(haland, 98).
-motivado(messi, nomotivado).
-motivado(haland, pocomotivado).
+auto(mcqueen, 5, 10, seguro).
+auto(delorean, 4, 9, inseguro).
+auto(troncomovil, 1, 2, seguro).
 
-% VIDEOS
+repuesto(tanquecombustible, 10).
+repuesto(cubierta, 5).
+repuesto(condensadorflujo, 9).
 
-duracion(video1, 99).
-titulo(video1, elmejorvideo).
-personaPrincipal(video1, maradona).
+% creo repuesto para probar el predicado conviene en todos
+repuesto(convieneentodos, 17).
 
-duracion(video1, 500).
-titulo(video1, elmejorvideo).
-personaPrincipal(video1, maradona).
+% bujia es la descripcion del componte esencial
+% en el enunciado se dice que sabemos el nombre, por eso lo hardcodee mas abajo
+repuesto(bujia, 12).
 
-vioVideo(messi, video1).
-vioVideo(haland, video2).
+coloco(mcqueen, tanquecombustible, 17).
+coloco(mcqueen, cubierta, 50).
+coloco(delorean, condensadorflujo, 365).
 
-leAyuda1(Jugador, Video):-
-    personaPrincipal(Video, maradona).
+% Sabemos el dia actual
+dia(150).
 
-leAyuda2(Jugador, Video) :-
-    motivado(Jugador, pocomotivado),
-    duracion(Video, Duracion),
-    (Duracion > 100).
+% PUNTO 1
 
-leAyuda3(Jugador, Video):-
-    not(motivado(Jugador, nomotivado)),
-    habilidad(Jugador, Habilidad),
-    (Habilidad > 200).
+% Completamente Inversible
+% este caso contiene un IS, y la variable sin unificar no esta del lado del is, 
+% por lo que sigiue siendo inversible,
+% pero si la variable sin unificar estaria al lado derecho del IS, este predicado NO seria inversible.
+% la diferencia de dia ahora se ejecuta en base que dice el enunciado que tenemos informacion del dia que es,
+% por lo que asumo dia(150).
+convieneColocarle(Auto, Repuesto):-
+	auto(Auto, _, _, _),
+	coloco(Auto, Repuesto, Dia),
+	dia(DiaActual),
+	Diferencia is DiaActual - Dia,
+	Diferencia > 100.
+	
+% Completamente inversible
+convieneColocarle(Auto, Repuesto):-
+	auto(Auto, _, _, _),
+	not(coloco(Auto, Repuesto, _)),
+	repuesto(Repuesto, Magnitud),
+	Magnitud =:= 17.
 
-lesAyudoTodos(Jugador):-
-    leAyuda1(Jugador, Video),
-    leAyuda2(Jugador, Video),
-    leAyuda3(Jugador, Video).
+% Completamente inversible
+convieneColocarle(Auto, Repuesto):-
+	auto(Auto, _, _, Seguridad),
+	Seguridad = inseguro,
+	repuesto(Repuesto, _),
+	Repuesto = bujia.
 
-leAyudaVideo(Jugador, Video):-
-    leAyuda1(Jugador, Video);
-    leAyuda2(Jugador, Video);
-    leAyuda3(Jugador, Video).
+% Completamente inversible
+convieneColocarle(Auto, Repuesto):-
+	auto(Auto, Capacidad, CapacidadMax, _),
+	Capacidad < CapacidadMax / 2,
+	Repuesto = bujia.
 
-leAyudaATodos(Video):-
-    forall(nombre(Jugador),leAyudaVideo(Jugador, Video) ).
+% PUNTO 2
 
-recomendaciones(Jugador, Video):-
-    leAyudaVideo(Jugador, Video),
-    not(vioVideo(Jugador, Video)).
+% Completamente inversible
+unSoloComponente(Auto):-
+	auto(Auto, _, _, _),
+	coloco(Auto, Repuesto1, _),
+	forall(coloco(Auto, Repuesto2, _), (Repuesto1 = Repuesto2)).
 
-% Inversibilidad: es la capacidad
-% para decir que valores cumplirian esa relacion.
-% ejemplo, ama(romeo, julieta). es una relacion y si ponemos ama(romeo, X). prolog nos va a devolver los X con los que esa relacion es cierta, lo cual devolveria X = julieta.
+
+
+% Completamente inversible
+% idem el de abajo, solo que quizas se ve medio repetitivo
+% utilizar el predicado auto aca y lo mismo en unSoloComponente,
+% pero si no unifico la variable Auto aca este predicado no seria inversible
+% ya que el not no es inversible si la variable no esta unificada.
+% este predicado simplemente es la negacion de un solo componente,
+% ya que si no tiene uno solo, implica que tiene mas de 1.
+masDeUnComponente(Auto):-
+	auto(Auto, _, _, _),
+	not(unSoloComponente(Auto)),
+	not(ningunComponente(Auto)).
+
+
+% este predicado es completamente inversible gracias al predicado auto(Auto...)
+% ya que si no, el not no es inversible si la variable no esta unificada,
+% y con el predicado auto, la unificamos.
+ningunComponente(Auto):-
+	auto(Auto, _, _, _),
+	not(coloco(Auto, _, _)).
+
+% PUNTO 3
+
+% Completamente inversible
+convieneEnTodos(Repuesto):-
+	repuesto(Repuesto, _),
+	forall(auto(Auto, _, _, _), convieneColocarle(Auto, Repuesto)).
+
+% PUNTO 4
+%inversibilidad: capacidad de un predicado de completar la variable que falta para
+%que el hecho sea verdadero.
+%ejemplo: 
+%alumno(octavio, utn).
+%alumno(octavio, X) -> X = utn, si X vale utn , esa relacion es verdadera.
